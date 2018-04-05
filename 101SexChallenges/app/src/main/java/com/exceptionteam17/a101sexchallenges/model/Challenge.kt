@@ -7,5 +7,6 @@ class Challenge (var id: Int, var text: String, var state: Int, var openDate: Lo
         const val LOVE = 3
         const val NEVER = 4
         const val NOTNOW = 5
+        const val OPPEND = 6
     }
 }

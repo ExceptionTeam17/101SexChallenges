@@ -51,6 +51,7 @@ class ChallengeActivity : AppCompatActivity() {
                     calendar.get(Calendar.HOUR_OF_DAY).toString() + ":" +
                     calendar.get(Calendar.MINUTE).toString()
             challenge!!.openDate = calendar.timeInMillis
+            challenge!!.state = Challenge.OPPEND
             //TODO add to base
         } else {
             calendar.timeInMillis = challenge!!.openDate
@@ -78,9 +79,27 @@ class ChallengeActivity : AppCompatActivity() {
         chal_text_close_data.text = getString(R.string.first_time_done, date)
 
         chal_text_comment.text = getString(R.string.comment, challenge!!.comment)
+
+        chal_btn_skip.setOnClickListener {
+            //add dialog
+
+        }
+
+        chal_btn_close.setOnClickListener {
+            //add dialog
+            exit()
+        }
+
+        chal_btn_done.setOnClickListener {
+            //add dialog
+
+        }
     }
 
     override  fun onBackPressed() {
+        exit()    }
+
+    private fun exit(){
         setResult(Activity.RESULT_CANCELED)
         finish()
     }

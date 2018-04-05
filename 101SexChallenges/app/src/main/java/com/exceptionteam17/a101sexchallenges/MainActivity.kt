@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity() {
             adapter!!.notifyDataSetChanged()
 
         }else if (requestCode == challengeCode && resultCode == Activity.RESULT_CANCELED){
-
+            adapter!!.notifyDataSetChanged()
 
         } else if(requestCode == ageCode && resultCode == Activity.RESULT_CANCELED){
             finish()
