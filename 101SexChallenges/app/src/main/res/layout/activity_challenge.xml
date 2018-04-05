@@ -78,6 +78,33 @@
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
         />
 
+    <Button
+        android:id="@+id/chal_btn_skip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="skip"
+        android:layout_gravity="center_horizontal"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/chal_btn_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="close"
+            android:layout_gravity="center_horizontal"/>
+
+        <Button
+            android:id="@+id/chal_btn_done"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="done"
+            android:layout_gravity="center_horizontal"/>
+
+    </LinearLayout>
 
 
 
