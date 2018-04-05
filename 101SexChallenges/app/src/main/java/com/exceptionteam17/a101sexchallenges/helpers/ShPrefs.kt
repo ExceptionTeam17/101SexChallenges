@@ -8,6 +8,7 @@ class ShPrefs {
     companion object {
         private const val isFirst : String = "isFirstRunOn101SexChallenges"
         private const val age : String = "isAgeCheckedOn101SexChallenges"
+        private const val progress : String = "progress101SexChallenges"
 
 
         fun isFirstRun (context: Context) : Boolean{
@@ -31,6 +32,18 @@ class ShPrefs {
             val prefs : SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
             val editor = prefs.edit()
             editor.putBoolean(age, isIt)
+            editor.apply()
+        }
+
+        fun getProgress (context: Context) : Int{
+            val prefs : SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+            return prefs.getInt(progress, 0)
+        }
+
+        fun addToProgress (context: Context){
+            val prefs : SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+            val editor = prefs.edit()
+            editor.putInt(progress, (getProgress(context) + 1))
             editor.apply()
         }
     }

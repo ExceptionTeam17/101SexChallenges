@@ -43,6 +43,7 @@ class MainActivity : AppCompatActivity() {
             ShPrefs.setIsFirstRun(this, false)
         }
 
+        main_text_progress.text = getString(R.string.progress_main, ShPrefs.getProgress(this))
         data = db!!.getData()
         data!!.forEach { Log.e("Bla", it.text)} // TODO test only
 
@@ -54,7 +55,7 @@ class MainActivity : AppCompatActivity() {
         main_grid.onItemClickListener =
                 AdapterView.OnItemClickListener { parent, v, position, id ->
                     var inte = Intent(this, ChallengeActivity::class.java)
-                    inte.putExtra("id", id)
+                    inte.putExtra("id", position)
                     startActivityForResult(inte, challengeCode)
                 }
     }
