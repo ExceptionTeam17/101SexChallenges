@@ -82,4 +82,30 @@ class DatabaseHelper private constructor(context: Context):
         c.close()
         return data
     }
+
+    fun updateState(id: Int, state: Int){
+        val db = this.writableDatabase
+        val update = "UPDATE $TABLE_USERS_SCORES SET $T_USERS_SCORES_COL_3 = $state WHERE $T_USERS_SCORES_COL_1 = $id"
+        db.execSQL(update)
+    }
+
+    fun updateOpenDate(id: Int, date: Long){
+        val db = this.writableDatabase
+        val update = "UPDATE $TABLE_USERS_SCORES SET $T_USERS_SCORES_COL_4 = $date WHERE $T_USERS_SCORES_COL_1 = $id"
+        db.execSQL(update)
+    }
+
+
+    fun updateFirstDone(id: Int, date: Long){
+        val db = this.writableDatabase
+        val update = "UPDATE $TABLE_USERS_SCORES SET $T_USERS_SCORES_COL_5 = $date WHERE $T_USERS_SCORES_COL_1 = $id"
+        db.execSQL(update)
+    }
+
+
+    fun updateComment(id: Int, comment: String){
+        val db = this.writableDatabase
+        val update = "UPDATE $TABLE_USERS_SCORES SET $T_USERS_SCORES_COL_6 = $comment WHERE $T_USERS_SCORES_COL_1 = $id"
+        db.execSQL(update)
+    }
 }

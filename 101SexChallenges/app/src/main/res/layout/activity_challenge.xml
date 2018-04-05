@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/softRed"
+    android:orientation="vertical"
+    tools:context=".ChallengeActivity">
+
+    <!--TODO change colors-->
+    <TextView
+        android:id="@+id/chal_text_open_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="open date: 22.03.2018"
+        android:textColor="@color/white"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+        />
+
+    <TextView
+        android:id="@+id/chal_text_close_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="close date: 22.03.2018"
+        android:textColor="@color/white"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+        />
+
+    <TextView
+        android:id="@+id/chal_text_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="comment: bla bla bla bla bla bla bla bla bla"
+        android:textColor="@color/white"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+        />
+
+    <TextView
+        android:id="@+id/chal_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="comment: bla bla bla bla bla bla bla bla bla"
+        android:textColor="@color/white"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+        />
+
+
+</LinearLayout>

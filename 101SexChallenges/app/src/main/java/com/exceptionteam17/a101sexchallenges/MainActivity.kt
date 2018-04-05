@@ -21,6 +21,8 @@ import kotlinx.android.synthetic.main.grid_elem.view.*
 class MainActivity : AppCompatActivity() {
 
     private val ageCode = 666
+    private val challengeCode = 668
+
     private var db: DatabaseHelper? = null
     private var data: ArrayList<Challenge>? = null
     private var adapter: MyGridAdapter? = null
@@ -51,14 +53,23 @@ class MainActivity : AppCompatActivity() {
 
         main_grid.onItemClickListener =
                 AdapterView.OnItemClickListener { parent, v, position, id ->
-                    Toast.makeText(this, "$position", Toast.LENGTH_SHORT).show()
+                    var inte = Intent(this, ChallengeActivity::class.java)
+                    inte.putExtra("id", id)
+                    startActivityForResult(inte, challengeCode)
                 }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == ageCode && resultCode == Activity.RESULT_CANCELED){
+        if (requestCode == challengeCode && resultCode == Activity.RESULT_OK){
+            adapter!!.notifyDataSetChanged()
+
+        }else if (requestCode == challengeCode && resultCode == Activity.RESULT_CANCELED){
+
+
+        } else if(requestCode == ageCode && resultCode == Activity.RESULT_CANCELED){
             finish()
+
         } else if (requestCode == ageCode && resultCode == Activity.RESULT_OK){
             ShPrefs.ageComfirmed(this, false)
         }

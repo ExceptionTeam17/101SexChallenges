@@ -19,7 +19,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AgeCheck"></activity>
+        <activity android:name=".AgeCheck" />
+        <activity android:name=".ChallengeActivity"></activity>
     </application>
 
 </manifest>
