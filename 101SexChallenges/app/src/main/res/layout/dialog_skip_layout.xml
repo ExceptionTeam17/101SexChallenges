@@ -3,10 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:gravity="center"
+    android:layout_gravity="center"
     android:orientation="vertical">
 
 
     <EditText
+        android:id="@+id/di_skip_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
@@ -18,12 +21,14 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/di_skip_never"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:text="never"/>
 
         <Button
+            android:id="@+id/di_skip_not_now"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"

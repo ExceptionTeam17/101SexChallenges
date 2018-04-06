@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     android:background="@color/darkGrey"
     android:orientation="vertical"
+    android:layout_gravity="center"
+    android:gravity="center_horizontal"
     tools:context=".ChallengeActivity">
 
     <!--TODO change colors-->
@@ -27,7 +29,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:textColor="@color/white"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                 />
 
             <TextView
@@ -37,7 +39,7 @@
                 android:text="@string/first_time_done"
                 android:layout_marginStart="8dp"
                 android:textColor="@color/white"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                 />
 
             <TextView
@@ -67,7 +69,22 @@
         </xyz.hanks.library.bang.SmallBangView>
     </LinearLayout>
 
-    <!--TODO add "challende number"-->
+    <View
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        />
+
+    <TextView
+        android:id="@+id/chal_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:gravity="center_horizontal"
+        android:text="@string/challenge"
+        android:textColor="@color/white"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+        />
 
     <View
         android:layout_width="1dp"
@@ -106,7 +123,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_gravity="center"
-        android:gravity="center">
+        android:gravity="center"
+        android:layout_marginBottom="16dp">
 
         <Button
             android:id="@+id/chal_btn_close"
@@ -127,9 +145,8 @@
     </LinearLayout>
 
     <View
-        android:layout_width="1dp"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="51dp"
         />
 
 </LinearLayout>

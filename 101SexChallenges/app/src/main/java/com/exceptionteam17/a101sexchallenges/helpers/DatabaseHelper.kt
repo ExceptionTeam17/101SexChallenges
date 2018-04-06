@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 import com.exceptionteam17.a101sexchallenges.model.Challenge
 
 class DatabaseHelper private constructor(context: Context):
@@ -29,6 +30,7 @@ class DatabaseHelper private constructor(context: Context):
     private val T_USERS_SCORES_COL_4 = "open_date"
     private val T_USERS_SCORES_COL_5 = "first_done"
     private val T_USERS_SCORES_COL_6 = "comment"
+    private val T_USERS_SCORES_COL_7 = "loved"
 
 
     private val USERS_SCORES_TABLE_CREATE = "CREATE TABLE IF NOT EXISTS " + TABLE_USERS_SCORES +
@@ -37,7 +39,9 @@ class DatabaseHelper private constructor(context: Context):
             T_USERS_SCORES_COL_3 + " INTEGER, " +
             T_USERS_SCORES_COL_4 + " INTEGER, " +
             T_USERS_SCORES_COL_5 + " INTEGER, " +
-            T_USERS_SCORES_COL_6 + " TEXT);"
+            T_USERS_SCORES_COL_6 + " TEXT, " +
+            T_USERS_SCORES_COL_7 + " INTEGER);"
+
 
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL(USERS_SCORES_TABLE_CREATE)
@@ -51,7 +55,10 @@ class DatabaseHelper private constructor(context: Context):
 
     fun addOnFirstRun() {
         val db = this.writableDatabase
-        val data = listOf<String>("test1", "Test2", "Test3")
+        val data = listOf<String>(
+                "Kiss your partner",
+                "Test2",
+                "Test3")
         val contentValues = ContentValues()
 
         for(text: String in data){
@@ -59,7 +66,8 @@ class DatabaseHelper private constructor(context: Context):
             contentValues.put(T_USERS_SCORES_COL_3, 1)
             contentValues.put(T_USERS_SCORES_COL_4, 0)
             contentValues.put(T_USERS_SCORES_COL_5, 0)
-            contentValues.put(T_USERS_SCORES_COL_6, "")
+            contentValues.put(T_USERS_SCORES_COL_6, Challenge.NEW)
+            contentValues.put(T_USERS_SCORES_COL_7, 0)
             db.insert(TABLE_USERS_SCORES, null, contentValues);
             contentValues.clear()
         }
@@ -77,7 +85,7 @@ class DatabaseHelper private constructor(context: Context):
         c.moveToFirst()
         do{
             data.add(Challenge(c.getInt(0), c.getString(1), c.getInt(2),
-                    c.getLong(3), c.getLong(4), c.getString(5)))
+                    c.getLong(3), c.getLong(4), c.getString(5), c.getInt(6) == 1))
         } while(c.moveToNext())
         c.close()
         return data
@@ -85,27 +93,33 @@ class DatabaseHelper private constructor(context: Context):
 
     fun updateState(id: Int, state: Int){
         val db = this.writableDatabase
-        val update = "UPDATE $TABLE_USERS_SCORES SET $T_USERS_SCORES_COL_3 = $state WHERE $T_USERS_SCORES_COL_1 = $id"
+        val update = "UPDATE $TABLE_USERS_SCORES SET $T_USERS_SCORES_COL_3 = $state WHERE $T_USERS_SCORES_COL_1 = \"$id\""
         db.execSQL(update)
     }
 
     fun updateOpenDate(id: Int, date: Long){
         val db = this.writableDatabase
-        val update = "UPDATE $TABLE_USERS_SCORES SET $T_USERS_SCORES_COL_4 = $date WHERE $T_USERS_SCORES_COL_1 = $id"
+        val update = "UPDATE $TABLE_USERS_SCORES SET $T_USERS_SCORES_COL_4 = $date WHERE $T_USERS_SCORES_COL_1 = \"$id\""
         db.execSQL(update)
     }
 
 
     fun updateFirstDone(id: Int, date: Long){
         val db = this.writableDatabase
-        val update = "UPDATE $TABLE_USERS_SCORES SET $T_USERS_SCORES_COL_5 = $date WHERE $T_USERS_SCORES_COL_1 = $id"
+        val update = "UPDATE $TABLE_USERS_SCORES SET $T_USERS_SCORES_COL_5 = $date WHERE $T_USERS_SCORES_COL_1 = \"$id\""
         db.execSQL(update)
     }
 
-
     fun updateComment(id: Int, comment: String){
         val db = this.writableDatabase
-        val update = "UPDATE $TABLE_USERS_SCORES SET $T_USERS_SCORES_COL_6 = $comment WHERE $T_USERS_SCORES_COL_1 = $id"
+        val update = "UPDATE $TABLE_USERS_SCORES SET $T_USERS_SCORES_COL_6 = \"$comment\" WHERE $T_USERS_SCORES_COL_1 = \"$id\""
+        db.execSQL(update)
+    }
+
+    fun updateIsLoved(id: Int, loved: Boolean){
+        val db = this.writableDatabase
+        val isIt : Int = (if(loved) 1 else 0)
+        val update = "UPDATE $TABLE_USERS_SCORES SET $T_USERS_SCORES_COL_7 = $isIt WHERE $T_USERS_SCORES_COL_1 = \"$id\""
         db.execSQL(update)
     }
 }

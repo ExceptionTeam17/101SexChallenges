@@ -11,29 +11,46 @@ import java.text.SimpleDateFormat
 import java.util.*
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.app.Dialog
+import android.view.Window
+import com.exceptionteam17.a101sexchallenges.helpers.DatabaseHelper
+import kotlinx.android.synthetic.main.dialog_close_layout.*
+import kotlinx.android.synthetic.main.dialog_done_layout.*
+import kotlinx.android.synthetic.main.dialog_skip_layout.*
 import xyz.hanks.library.bang.SmallBangView
 
 
 class ChallengeActivity : AppCompatActivity() {
 
     private var id: Int? = null
-    private var challenge: Challenge? = null
+    private var db: DatabaseHelper? = null
+    private var dialogSpip: Dialog? = null
+    private var dialogClose: Dialog? = null
+    private var dialogDone: Dialog? = null
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_challenge)
         supportActionBar!!.hide()
 
         id = intent.getIntExtra("id", 0)
-        challenge = Data.list!![id!!]
-        chal_text.text = challenge!!.text
+
+        chal_text.text = Data.list!![id!!]!!.text
+
+        db = DatabaseHelper.getInstance(this)
 
         var calendar = Calendar.getInstance()
 
         like_heart.setOnClickListener {
                 if (like_heart.isSelected) {
                     like_heart.isSelected = false
+                    Data.list!![id!!].isLoved = like_heart.isSelected
+                    db!!.updateIsLoved(Data.list!![id!!].id, like_heart.isSelected)
                 } else {
                     like_heart.isSelected = true
+                    Data.list!![id!!].isLoved = like_heart.isSelected
+                    db!!.updateIsLoved(Data.list!![id!!].id, like_heart.isSelected)
                     like_heart.likeAnimation(object : AnimatorListenerAdapter() {
                         override fun onAnimationEnd(animation: Animator) {
                             super.onAnimationEnd(animation)
@@ -42,65 +59,175 @@ class ChallengeActivity : AppCompatActivity() {
                 }
             }
 
+        if (Data.list!![id!!].isLoved){
+            like_heart.isSelected = true
+        }
 
         var date: String = ""
-        if (challenge!!.openDate == 0L){
+        if (Data.list!![id!!].openDate == 0L){
             date = calendar.get(Calendar.DAY_OF_MONTH).toString() + "." +
                     (calendar.get(Calendar.MONTH)+1).toString() + "." +
                     calendar.get(Calendar.YEAR).toString() + " / " +
                     calendar.get(Calendar.HOUR_OF_DAY).toString() + ":" +
-                    calendar.get(Calendar.MINUTE).toString()
-            challenge!!.openDate = calendar.timeInMillis
-            challenge!!.state = Challenge.OPPEND
-            //TODO add to base
+                    (if(calendar.get(Calendar.MINUTE) < 10) "0" else "") +
+                            calendar.get(Calendar.MINUTE).toString()
+            Data.list!![id!!].openDate = calendar.timeInMillis
+            db!!.updateOpenDate(Data.list!![id!!].id, calendar.timeInMillis)
+            Data.list!![id!!].state = Challenge.OPPEND
+            db!!.updateState(Data.list!![id!!].id, Challenge.OPPEND)
+
         } else {
-            calendar.timeInMillis = challenge!!.openDate
+            calendar.timeInMillis = Data.list!![id!!].openDate
             date = calendar.get(Calendar.DAY_OF_MONTH).toString() + "." +
                     (calendar.get(Calendar.MONTH)+1).toString() + "." +
                     calendar.get(Calendar.YEAR).toString() + " / " +
                     calendar.get(Calendar.HOUR_OF_DAY).toString() + ":" +
-                    if(calendar.get(Calendar.MINUTE) < 10) "0" else "" +
+                    (if(calendar.get(Calendar.MINUTE) < 10) "0" else "") +
                             calendar.get(Calendar.MINUTE).toString()
         }
         chal_text_open_data.text = getString(R.string.first_time_open, date)
 
-        if (challenge!!.firstDone == 0L){
+        if (Data.list!![id!!].firstDone == 0L){
             date = "never"
 
         } else {
-            calendar.timeInMillis = challenge!!.firstDone
+            calendar.timeInMillis = Data.list!![id!!].firstDone
             date = calendar.get(Calendar.DAY_OF_MONTH).toString() + "." +
                     (calendar.get(Calendar.MONTH)+1).toString() + "." +
                     calendar.get(Calendar.YEAR).toString() + " / " +
                     calendar.get(Calendar.HOUR_OF_DAY).toString() + ":" +
-                    if(calendar.get(Calendar.MINUTE) < 10) "0" else "" +
+                    (if(calendar.get(Calendar.MINUTE) < 10) "0" else "") +
                             calendar.get(Calendar.MINUTE).toString()
         }
         chal_text_close_data.text = getString(R.string.first_time_done, date)
 
-        chal_text_comment.text = getString(R.string.comment, challenge!!.comment)
+        chal_text_comment.text = getString(R.string.comment, Data.list!![id!!].comment)
+
+        chal_number.text = getString(R.string.challenge, Data.list!![id!!].id)
+
+        dialogSpip = Dialog(this, R.style.Theme_Dialog)
+        dialogSpip!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+//        dialogSpip!!.setCancelable(false)
+        dialogSpip!!.setContentView(R.layout.dialog_skip_layout)
+
+        dialogClose = Dialog(this, R.style.Theme_Dialog)
+        dialogClose!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialogClose!!.setCancelable(false)
+        dialogClose!!.setContentView(R.layout.dialog_close_layout)
+
+        dialogDone = Dialog(this, R.style.Theme_Dialog)
+        dialogDone!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+//        dialogDone!!.setCancelable(false)
+        dialogDone!!.setContentView(R.layout.dialog_done_layout)
 
         chal_btn_skip.setOnClickListener {
-            //add dialog
+            dialogSpip!!.di_skip_never.setOnClickListener {
+                var str: String = dialogSpip!!.di_skip_edit.text.toString()
+                if(str.isEmpty()){
+                    str = " "
+                }
+                Data.list!![id!!].comment = str
+                if(Data.list!![id!!].state != Challenge.DONE && Data.list!![id!!].state != Challenge.LOVE) {
+                    Data.list!![id!!].state = Challenge.NEVER
+                    db!!.updateState(Data.list!![id!!].id, Challenge.NEVER)
+                }
+                db!!.updateComment(Data.list!![id!!].id, str)
+                setResult(Activity.RESULT_OK)
+                dialogSpip!!.dismiss()
+                finish()
+            }
 
+            dialogSpip!!.di_skip_edit.setText(Data.list!![id!!].comment.trim())
+
+            dialogSpip!!.di_skip_not_now.setOnClickListener {
+                var str: String = dialogSpip!!.di_skip_edit.text.toString()
+                if(str.isEmpty()){
+                    str = " "
+                }
+                Data.list!![id!!].comment = str
+                if(Data.list!![id!!].state != Challenge.DONE && Data.list!![id!!].state != Challenge.LOVE) {
+                    Data.list!![id!!].state = Challenge.NOTNOW
+                    db!!.updateState(Data.list!![id!!].id, Challenge.NOTNOW)
+                }
+                db!!.updateComment(Data.list!![id!!].id, str)
+                setResult(Activity.RESULT_OK)
+                dialogSpip!!.dismiss()
+                finish()
+            }
+
+            dialogSpip!!.show()
         }
 
         chal_btn_close.setOnClickListener {
-            //add dialog
             exit()
         }
 
         chal_btn_done.setOnClickListener {
-            //add dialog
+            dialogDone!!.di_done_edit.setText(Data.list!![id!!].comment.trim())
 
+            dialogDone!!.di_done_like_heart.setOnClickListener {
+                if (dialogDone!!.di_done_like_heart.isSelected) {
+                    dialogDone!!.di_done_like_heart.isSelected = false
+                } else {
+                    dialogDone!!.di_done_like_heart.isSelected = true
+                    dialogDone!!.di_done_like_heart.likeAnimation(object : AnimatorListenerAdapter() {
+                        override fun onAnimationEnd(animation: Animator) {
+                            super.onAnimationEnd(animation)
+                        }
+                    })
+                }
+            }
+
+            if(Data.list!![id!!].isLoved){
+                dialogDone!!.di_done_like_heart.isSelected = true
+            }
+
+            dialogDone!!.di_done_ok.setOnClickListener {
+                var str: String = dialogDone!!.di_done_edit.text.toString()
+                if(str.isEmpty()){
+                    str = " "
+                }
+                Data.list!![id!!].comment = str
+                if(Data.list!![id!!].state != Challenge.DONE && Data.list!![id!!].state != Challenge.LOVE) {
+                    Data.list!![id!!].state = Challenge.DONE
+                    db!!.updateState(Data.list!![id!!].id, Challenge.DONE)
+                    ShPrefs.addToProgress(this@ChallengeActivity)
+                }
+                db!!.updateComment(Data.list!![id!!].id, str)
+                if(Data.list!![id!!].firstDone == 0L) {
+                    var time = Calendar.getInstance().timeInMillis
+                    Data.list!![id!!].firstDone = time
+                    db!!.updateFirstDone(Data.list!![id!!].id, time)
+                }
+
+                Data.list!![id!!].isLoved = dialogDone!!.di_done_like_heart.isSelected
+                db!!.updateIsLoved(Data.list!![id!!].id, dialogDone!!.di_done_like_heart.isSelected)
+
+                setResult(Activity.RESULT_OK)
+                dialogDone!!.dismiss()
+                finish()
+            }
+
+            dialogDone!!.show()
         }
     }
 
     override  fun onBackPressed() {
-        exit()    }
+        exit()
+    }
 
     private fun exit(){
-        setResult(Activity.RESULT_CANCELED)
-        finish()
+        dialogClose!!.di_close_no.setOnClickListener {
+            dialogClose!!.dismiss()
+        }
+
+        dialogClose!!.di_close_yes.setOnClickListener {
+            setResult(Activity.RESULT_CANCELED)
+            dialogClose!!.dismiss()
+            finish()
+        }
+
+        dialogClose!!.show()
+
     }
 }

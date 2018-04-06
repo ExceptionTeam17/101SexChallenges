@@ -63,6 +63,7 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == challengeCode && resultCode == Activity.RESULT_OK){
+            main_text_progress.text = getString(R.string.progress_main, ShPrefs.getProgress(this))
             adapter!!.notifyDataSetChanged()
 
         }else if (requestCode == challengeCode && resultCode == Activity.RESULT_CANCELED){
@@ -101,7 +102,7 @@ class MainActivity : AppCompatActivity() {
 
             var inflator = context!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             var itemView = convertView ?: inflator.inflate(R.layout.grid_elem, null) //WOW !!!
-            itemView!!.grid_number.text = (position + 1).toString()
+            itemView!!.grid_number.text = item.id.toString()
 
             when(item.state){
                 1 -> {
@@ -109,10 +110,17 @@ class MainActivity : AppCompatActivity() {
                     itemView.grid_number.setTextColor(Color.BLACK)
                 }
                 2 -> {
-                    //itemView.grid_img.setImageBitmap()
+                    if(item.isLoved){
+                        //itemView.grid_img.setImageBitmap()
+
+                    } else {
+                        //itemView.grid_img.setImageBitmap()
+
+                    }
                     itemView.grid_number.setTextColor(Color.BLACK)
                 }
-                3 -> {
+                6 -> {
+
                     //itemView.grid_img.setImageBitmap()
                     itemView.grid_number.setTextColor(Color.BLACK)
                 }
