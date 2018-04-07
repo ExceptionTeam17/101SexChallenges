@@ -105,31 +105,40 @@ class MainActivity : AppCompatActivity() {
             itemView!!.grid_number.text = item.id.toString()
 
             when(item.state){
-                1 -> {
+                Challenge.NEW -> {
                     //itemView.grid_img.setImageBitmap()
                     itemView.grid_number.setTextColor(Color.BLACK)
                 }
-                2 -> {
+                Challenge.DONE -> {
                     if(item.isLoved){
-                        //itemView.grid_img.setImageBitmap()
-
+                        itemView.grid_img.setImageResource(R.drawable.love)
                     } else {
                         //itemView.grid_img.setImageBitmap()
 
                     }
                     itemView.grid_number.setTextColor(Color.BLACK)
                 }
-                6 -> {
+                Challenge.OPPEND -> {
 
                     //itemView.grid_img.setImageBitmap()
                     itemView.grid_number.setTextColor(Color.BLACK)
                 }
-                4 -> {
-                    //itemView.grid_img.setImageBitmap()
+                Challenge.NOTNOW -> {
+                    if(item.isLoved){
+                        itemView.grid_img.setImageResource(R.drawable.notnowlove)
+
+                    } else {
+                        itemView.grid_img.setImageResource(R.drawable.notnow)
+                    }
                     itemView.grid_number.setTextColor(Color.BLACK)
                 }
-                5 -> {
-                    //itemView.grid_img.setImageBitmap()
+                Challenge.NEVER -> {
+                    if(item.isLoved){
+                        itemView.grid_img.setImageResource(R.drawable.neverlove)
+
+                    } else {
+                        itemView.grid_img.setImageResource(R.drawable.never)
+                    }
                     itemView.grid_number.setTextColor(Color.BLACK)
                 }
             }

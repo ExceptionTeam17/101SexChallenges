@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/grid_elem_back"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
@@ -10,6 +11,7 @@
         android:id="@+id/grid_img"
         android:layout_width="80dp"
         android:layout_height="80dp"
+        android:layout_margin="5dp"
         android:src="@mipmap/ic_launcher"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,18 +22,15 @@
         android:id="@+id/grid_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+
         android:textStyle="bold"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:foregroundGravity="center"
         android:text="101"
         android:textSize="40sp"
         app:layout_constraintBottom_toBottomOf="@+id/grid_img"
         app:layout_constraintEnd_toEndOf="@+id/grid_img"
         app:layout_constraintStart_toStartOf="@+id/grid_img"
         app:layout_constraintTop_toTopOf="@+id/grid_img" />
-
-
 
 </android.support.constraint.ConstraintLayout>
