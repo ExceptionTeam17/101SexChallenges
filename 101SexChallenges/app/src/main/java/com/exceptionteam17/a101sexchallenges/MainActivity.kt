@@ -34,7 +34,6 @@ class MainActivity : AppCompatActivity() {
         db = DatabaseHelper.getInstance(this)
 
         if(ShPrefs.isAgeChecked(this)) { // first run
-//        if(true){
             startActivityForResult(Intent(this, AgeCheck::class.java), ageCode)
         }
         if(ShPrefs.isFirstRun(this)) { // first run
@@ -107,7 +106,7 @@ class MainActivity : AppCompatActivity() {
             when(item.state){
                 Challenge.NEW -> {
                     //itemView.grid_img.setImageBitmap()
-                    itemView.grid_number.setTextColor(Color.BLACK)
+//                    itemView.grid_number.setTextColor(Color.BLACK)
                 }
                 Challenge.DONE -> {
                     if(item.isLoved){
@@ -116,12 +115,12 @@ class MainActivity : AppCompatActivity() {
                         //itemView.grid_img.setImageBitmap()
 
                     }
-                    itemView.grid_number.setTextColor(Color.BLACK)
+//                    itemView.grid_number.setTextColor(Color.BLACK)
                 }
                 Challenge.OPPEND -> {
 
                     //itemView.grid_img.setImageBitmap()
-                    itemView.grid_number.setTextColor(Color.BLACK)
+//                    itemView.grid_number.setTextColor(Color.BLACK)
                 }
                 Challenge.NOTNOW -> {
                     if(item.isLoved){
@@ -130,7 +129,8 @@ class MainActivity : AppCompatActivity() {
                     } else {
                         itemView.grid_img.setImageResource(R.drawable.notnow)
                     }
-                    itemView.grid_number.setTextColor(Color.BLACK)
+//                    itemView.grid_number.setTextColor(Color.BLACK)
+                    itemView.grid_number.setShadowLayer(35F, 0F, 0F, Color.RED) //todo ADD TO ALL
                 }
                 Challenge.NEVER -> {
                     if(item.isLoved){
@@ -139,7 +139,7 @@ class MainActivity : AppCompatActivity() {
                     } else {
                         itemView.grid_img.setImageResource(R.drawable.never)
                     }
-                    itemView.grid_number.setTextColor(Color.BLACK)
+//                    itemView.grid_number.setTextColor(Color.BLACK)
                 }
             }
             return itemView

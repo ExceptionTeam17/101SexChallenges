@@ -58,15 +58,20 @@ class DatabaseHelper private constructor(context: Context):
         val data = listOf<String>(
                 "Kiss your partner",
                 "Test2",
+                "Test4",
+                "Test5",
+                "Test6",
+                "Test7",
+                "Test8",
                 "Test3")
         val contentValues = ContentValues()
 
         for(text: String in data){
             contentValues.put(T_USERS_SCORES_COL_2, text)
-            contentValues.put(T_USERS_SCORES_COL_3, 1)
+            contentValues.put(T_USERS_SCORES_COL_3, Challenge.NEW)
             contentValues.put(T_USERS_SCORES_COL_4, 0)
             contentValues.put(T_USERS_SCORES_COL_5, 0)
-            contentValues.put(T_USERS_SCORES_COL_6, Challenge.NEW)
+            contentValues.put(T_USERS_SCORES_COL_6, " ")
             contentValues.put(T_USERS_SCORES_COL_7, 0)
             db.insert(TABLE_USERS_SCORES, null, contentValues);
             contentValues.clear()
