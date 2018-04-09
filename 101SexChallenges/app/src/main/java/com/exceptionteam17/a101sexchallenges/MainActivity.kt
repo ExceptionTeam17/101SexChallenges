@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.Rect
+import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -17,6 +19,13 @@ import com.exceptionteam17.a101sexchallenges.helpers.ShPrefs
 import com.exceptionteam17.a101sexchallenges.model.Challenge
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.grid_elem.view.*
+import android.transition.Transition
+import android.transition.Explode
+import android.transition.TransitionManager
+import android.transition.TransitionListenerAdapter
+
+
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -55,7 +64,49 @@ class MainActivity : AppCompatActivity() {
                 AdapterView.OnItemClickListener { parent, v, position, id ->
                     var inte = Intent(this, ChallengeActivity::class.java)
                     inte.putExtra("id", position)
-                    startActivityForResult(inte, challengeCode)
+
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                        val viewRect = Rect()
+                        v.getGlobalVisibleRect(viewRect)
+
+                        var explode: Transition = Explode()
+                        explode.epicenterCallback = object : Transition.EpicenterCallback() {
+                            override fun onGetEpicenter(transition: Transition): Rect {
+                                return viewRect
+                            }
+                        }
+
+//                        val sharedElementEnterTransition = window.sharedElementEnterTransition
+
+//                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//                            sharedElementEnterTransition.addListener(object : TransitionListenerAdapter() {
+//                                override fun onTransitionEnd(transition: Transition) {
+//                                    super.onTransitionEnd(transition)
+//                                }
+//                            })
+//                        } else {
+                            explode.addListener(object : Transition.TransitionListener {
+                                override fun onTransitionStart(transition: Transition) {}
+
+                                override fun onTransitionEnd(transition: Transition) {
+                                    startActivityForResult(inte, challengeCode)
+                                }
+
+                                override fun onTransitionCancel(transition: Transition) {}
+
+                                override fun onTransitionPause(transition: Transition) {}
+
+                                override fun onTransitionResume(transition: Transition) {}
+                            })
+//                        }
+                        explode.duration = 300
+                        TransitionManager.beginDelayedTransition(main_grid, explode)
+                        main_grid.adapter = null
+
+                    } else {
+
+                        startActivityForResult(inte, challengeCode)
+                    }
                 }
     }
 
@@ -63,9 +114,15 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == challengeCode && resultCode == Activity.RESULT_OK){
             main_text_progress.text = getString(R.string.progress_main, ShPrefs.getProgress(this))
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                main_grid.adapter = adapter
+            }
             adapter!!.notifyDataSetChanged()
 
         }else if (requestCode == challengeCode && resultCode == Activity.RESULT_CANCELED){
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                main_grid.adapter = adapter
+            }
             adapter!!.notifyDataSetChanged()
 
         } else if(requestCode == ageCode && resultCode == Activity.RESULT_CANCELED){
@@ -111,6 +168,7 @@ class MainActivity : AppCompatActivity() {
                 Challenge.DONE -> {
                     if(item.isLoved){
                         itemView.grid_img.setImageResource(R.drawable.love)
+                        itemView.grid_number.setShadowLayer(35F, 0F, 0F, Color.BLUE)
                     } else {
                         //itemView.grid_img.setImageBitmap()
 
@@ -139,7 +197,8 @@ class MainActivity : AppCompatActivity() {
                     } else {
                         itemView.grid_img.setImageResource(R.drawable.never)
                     }
-//                    itemView.grid_number.setTextColor(Color.BLACK)
+
+                    itemView.grid_number.setShadowLayer(40F, 0F, 0F, Color.BLUE)
                 }
             }
             return itemView
