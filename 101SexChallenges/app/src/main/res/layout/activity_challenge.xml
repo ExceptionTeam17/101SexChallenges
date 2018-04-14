@@ -96,7 +96,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         />
-<!--TODO change font-->
+
     <TextView
         android:id="@+id/chal_text"
         android:layout_width="match_parent"
@@ -104,6 +104,7 @@
         android:layout_margin="20dp"
         android:gravity="center_horizontal"
         android:text="bla bla bla bla bla bla bla bla bla"
+        android:fontFamily="@font/komix"
         android:textColor="@color/white"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
         />
@@ -128,14 +129,15 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_gravity="center"
-        android:gravity="center"
-        android:layout_marginBottom="16dp">
+        android:layout_marginBottom="10dp"
+        android:gravity="center">
 
         <Button
             android:id="@+id/chal_btn_close"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
             android:text="close"
             android:layout_gravity="center_horizontal"/>
 
@@ -143,7 +145,8 @@
             android:id="@+id/chal_btn_done"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
             android:text="done"
             android:layout_gravity="center_horizontal"/>
 
