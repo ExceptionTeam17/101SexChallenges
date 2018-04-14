@@ -26,6 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/first_time_open"
+                android:fontFamily="@font/kaushan_script_regular"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:textColor="@color/white"
@@ -38,6 +39,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/first_time_done"
                 android:layout_marginStart="8dp"
+                android:fontFamily="@font/kaushan_script_regular"
                 android:textColor="@color/white"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                 />
@@ -48,6 +50,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/comment"
                 android:layout_marginStart="8dp"
+                android:fontFamily="@font/kaushan_script_regular"
                 android:textColor="@color/white"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 />
@@ -81,7 +84,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:gravity="center_horizontal"
+        android:fontFamily="@font/kaushan_script_regular"
         android:text="@string/challenge"
+
         android:textColor="@color/white"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
         />
@@ -91,7 +96,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         />
-
+<!--TODO change font-->
     <TextView
         android:id="@+id/chal_text"
         android:layout_width="match_parent"

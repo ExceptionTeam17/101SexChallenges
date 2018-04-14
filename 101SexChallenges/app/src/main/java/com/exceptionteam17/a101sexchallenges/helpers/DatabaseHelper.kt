@@ -142,7 +142,7 @@ class DatabaseHelper private constructor(context: Context):
                 "Use handcuffs.",
                 "Sex on table - put her on.",
                 "It's doggystyle time!",
-                "Do it rider.",
+                "Do it Rider. If Rider is boring for you, try Ape position",
                 "It's light Bondage time.",
                 "Use some oil/losion and lube. Make it slippery!",
                 "Pegg him, then make anal.",

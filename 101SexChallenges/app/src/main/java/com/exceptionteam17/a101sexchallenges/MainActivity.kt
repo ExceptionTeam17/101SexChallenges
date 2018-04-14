@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         main_text_progress.text = getString(R.string.progress_main, ShPrefs.getProgress(this))
-        main_text_progress.setShadowLayer(40F, 0F, 0F, Color.BLUE)
+        main_text_progress.setShadowLayer(30F, 0F, 0F, Color.parseColor("#FFF47070"))
         data = db!!.getData()
         data!!.forEach { Log.e("Bla", it.text)} // TODO test only
 
