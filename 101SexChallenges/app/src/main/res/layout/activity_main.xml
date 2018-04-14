@@ -19,6 +19,17 @@
         android:layout_margin="10dp"
         android:textSize="20sp"
         android:text="Hello World!" />
+    <TextView
+        android:id="@+id/main_hidden"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:fontFamily="@font/norpicons"
+        android:layout_margin="10dp"
+        android:textSize="20sp"
+        android:text="0123456789qwertyuioplkjhgfdsz"
+        android:visibility="gone"/>
 
     <GridView
         android:id="@+id/main_grid"
