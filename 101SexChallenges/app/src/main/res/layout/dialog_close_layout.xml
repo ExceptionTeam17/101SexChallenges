@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:gravity="center"
     android:layout_gravity="center"
+    android:background="@drawable/dialog_bacground_dia"
     android:orientation="vertical">
 
     <TextView
@@ -12,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:layout_gravity="center"
+        android:textColor="@color/white"
         android:text="Are you sure?"/>
 
     <LinearLayout
