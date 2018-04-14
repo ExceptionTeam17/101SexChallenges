@@ -5,5 +5,6 @@
     <string name="progress_main">Progress: %1$d / 101</string>
     <string name="comment">Comment: %1$s</string>
     <string name="challenge">Challenge: %1$d</string>
-    <string name="good_job">Good job!</string>
+    <string name="good_job">Good job! </string>
+    <string name="comment_dia">Comment</string>
 </resources>

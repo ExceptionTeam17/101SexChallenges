@@ -14,9 +14,14 @@
         android:id="@+id/di_skip_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
         android:textColor="@color/white"
+        android:textColorHint="#77ffffff"
+        android:textColorHighlight="@color/white"
         android:layout_margin="8dp"
-        android:hint="comment"/>
+        android:fontFamily="@font/kaushan_script_regular"
+        android:hint="@string/comment_dia"/>
 
     <LinearLayout
         android:layout_width="wrap_content"

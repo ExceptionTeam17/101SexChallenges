@@ -98,7 +98,7 @@ class DatabaseHelper private constructor(context: Context):
                 "Sex in the woods or in a park.",
                 "Anally finger him. You can try to find his prostate and massage it until he comes.",
                 "Sex in a car. Old but great!",
-                "Sex under shower.",
+                "Sex in the shower.",
                 "Use cock ring.",
                 "It's pegging time! Pegg him.",
                 "Have sex in front of an outward facing window.",

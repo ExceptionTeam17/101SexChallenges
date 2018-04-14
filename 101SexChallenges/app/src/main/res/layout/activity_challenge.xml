@@ -84,9 +84,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:gravity="center_horizontal"
-        android:fontFamily="@font/kaushan_script_regular"
         android:text="@string/challenge"
-
+        android:fontFamily="@font/kaushan_script_regular"
         android:textColor="@color/white"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
         />

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="180dp"
     android:layout_height="wrap_content"
     android:gravity="center"
     android:layout_gravity="center"
@@ -9,26 +9,38 @@
     android:orientation="vertical">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
         android:layout_gravity="center"
-        android:text="@string/good_job"/>
+        android:gravity="center"
+        android:text="@string/good_job"
+        android:fontFamily="@font/kaushan_script_regular"
+        android:textColor="@color/white"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+        />
 
     <EditText
         android:id="@+id/di_done_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
         android:textColor="@color/white"
+        android:textColorHint="#77ffffff"
+        android:textColorHighlight="@color/white"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:hint="Comment"/>
+        android:fontFamily="@font/kaushan_script_regular"
+        android:hint="@string/comment_dia"/>
 
     <xyz.hanks.library.bang.SmallBangView
         android:id="@+id/di_done_like_heart"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_margin="8dp"
+        android:layout_marginTop="8dp"
         android:layout_gravity="center">
 
         <ImageView
@@ -40,11 +52,27 @@
     </xyz.hanks.library.bang.SmallBangView>
 
 
-        <Button
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/di_done_back"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="12dp"
+            android:src="@drawable/back"
+            />
+
+        <ImageView
             android:id="@+id/di_done_ok"
-            android:layout_width="160dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:text="ok"/>
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="12dp"
+            android:src="@drawable/ok"
+            />
+
+    </LinearLayout>
 
 </LinearLayout>

@@ -185,6 +185,10 @@ class ChallengeActivity : AppCompatActivity() {
                 dialogDone!!.di_done_like_heart.isSelected = true
             }
 
+            dialogDone!!.di_done_back.setOnClickListener {
+                dialogDone!!.dismiss()
+            }
+
             dialogDone!!.di_done_ok.setOnClickListener {
                 var str: String = dialogDone!!.di_done_edit.text.toString()
                 if(str.isEmpty()){
@@ -221,17 +225,17 @@ class ChallengeActivity : AppCompatActivity() {
     }
 
     private fun exit(){
-        dialogClose!!.di_close_no.setOnClickListener {
-            dialogClose!!.dismiss()
-        }
-
-        dialogClose!!.di_close_yes.setOnClickListener {
+//        dialogClose!!.di_close_no.setOnClickListener {
+//            dialogClose!!.dismiss()
+//        }
+//
+//        dialogClose!!.di_close_yes.setOnClickListener {
             setResult(Activity.RESULT_CANCELED)
-            dialogClose!!.dismiss()
+//            dialogClose!!.dismiss()
             finish()
-        }
-
-        dialogClose!!.show()
+//        }
+//
+//        dialogClose!!.show()
 
     }
 
