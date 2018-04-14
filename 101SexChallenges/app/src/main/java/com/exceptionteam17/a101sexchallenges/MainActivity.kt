@@ -163,23 +163,27 @@ class MainActivity : AppCompatActivity() {
 
             when(item.state){
                 Challenge.NEW -> {
-                    //itemView.grid_img.setImageBitmap()
-//                    itemView.grid_number.setTextColor(Color.BLACK)
+                    itemView.grid_img.setImageResource(R.drawable.new_state)
+                    itemView.grid_number.setShadowLayer(35F, 0F, 0F, Color.BLUE)
                 }
                 Challenge.DONE -> {
                     if(item.isLoved){
                         itemView.grid_img.setImageResource(R.drawable.love)
                         itemView.grid_number.setShadowLayer(35F, 0F, 0F, Color.BLUE)
                     } else {
-                        //itemView.grid_img.setImageBitmap()
+                        itemView.grid_img.setImageResource(R.drawable.done_state)
+                        itemView.grid_number.setShadowLayer(35F, 0F, 0F, Color.BLUE)
 
                     }
-//                    itemView.grid_number.setTextColor(Color.BLACK)
                 }
                 Challenge.OPPEND -> {
-
-                    //itemView.grid_img.setImageBitmap()
-//                    itemView.grid_number.setTextColor(Color.BLACK)
+                    if(item.isLoved){
+                        itemView.grid_img.setImageResource(R.drawable.open_love)
+                        itemView.grid_number.setShadowLayer(35F, 0F, 0F, Color.BLUE)
+                    } else {
+                        itemView.grid_img.setImageResource(R.drawable.open)
+                        itemView.grid_number.setShadowLayer(35F, 0F, 0F, Color.BLUE)
+                    }
                 }
                 Challenge.NOTNOW -> {
                     if(item.isLoved){
@@ -193,13 +197,13 @@ class MainActivity : AppCompatActivity() {
                 }
                 Challenge.NEVER -> {
                     if(item.isLoved){
-                        itemView.grid_img.setImageResource(R.drawable.neverlove)
-
+                        itemView.grid_img.setImageResource(R.drawable.never_love_state)
+                        itemView.grid_number.setShadowLayer(35F, 0F, 0F, Color.BLUE)
                     } else {
                         itemView.grid_img.setImageResource(R.drawable.never)
-                    }
+                        itemView.grid_number.setShadowLayer(35F, 0F, 0F, Color.BLUE)
 
-                    itemView.grid_number.setShadowLayer(40F, 0F, 0F, Color.BLUE)
+                    }
                 }
             }
             return itemView
