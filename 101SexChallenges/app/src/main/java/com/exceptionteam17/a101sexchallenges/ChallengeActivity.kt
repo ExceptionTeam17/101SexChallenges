@@ -14,6 +14,7 @@ import android.animation.AnimatorListenerAdapter
 import android.app.Dialog
 import android.view.Window
 import com.exceptionteam17.a101sexchallenges.helpers.DatabaseHelper
+import com.google.android.gms.ads.AdRequest
 import kotlinx.android.synthetic.main.dialog_close_layout.*
 import kotlinx.android.synthetic.main.dialog_done_layout.*
 import kotlinx.android.synthetic.main.dialog_skip_layout.*
@@ -27,10 +28,12 @@ class ChallengeActivity : AppCompatActivity() {
     private var dialogSpip: Dialog? = null
     private var dialogClose: Dialog? = null
     private var dialogDone: Dialog? = null
+    private var adRequest: AdRequest? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        adRequest = AdRequest.Builder().build()
         setContentView(R.layout.activity_challenge)
         supportActionBar!!.hide()
 
@@ -210,6 +213,7 @@ class ChallengeActivity : AppCompatActivity() {
 
             dialogDone!!.show()
         }
+        adViewC.loadAd(adRequest)
     }
 
     override  fun onBackPressed() {
@@ -229,5 +233,20 @@ class ChallengeActivity : AppCompatActivity() {
 
         dialogClose!!.show()
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        adViewC.resume()
+    }
+
+    override fun onPause() {
+        adViewC.pause()
+        super.onPause()
+    }
+
+    override fun onDestroy() {
+        adViewC.destroy()
+        super.onDestroy()
     }
 }

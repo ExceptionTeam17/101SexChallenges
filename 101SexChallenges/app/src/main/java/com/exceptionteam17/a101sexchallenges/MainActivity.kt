@@ -23,8 +23,8 @@ import android.transition.Transition
 import android.transition.Explode
 import android.transition.TransitionManager
 import android.transition.TransitionListenerAdapter
-
-
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 
 
 class MainActivity : AppCompatActivity() {
@@ -35,9 +35,12 @@ class MainActivity : AppCompatActivity() {
     private var db: DatabaseHelper? = null
     private var data: ArrayList<Challenge>? = null
     private var adapter: MyGridAdapter? = null
+    private var adRequest: AdRequest? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        MobileAds.initialize(this, "ca-app-pub-3940256099942544/1033173712") // TODO change test ID
+        adRequest = AdRequest.Builder().build()
         setContentView(R.layout.activity_main)
         supportActionBar!!.hide()
         db = DatabaseHelper.getInstance(this)
@@ -54,7 +57,7 @@ class MainActivity : AppCompatActivity() {
         main_text_progress.text = getString(R.string.progress_main, ShPrefs.getProgress(this))
         main_text_progress.setShadowLayer(30F, 0F, 0F, Color.parseColor("#FFF47070"))
         data = db!!.getData()
-        data!!.forEach { Log.e("Bla", it.text)} // TODO test only
+//        data!!.forEach { Log.e("Bla", it.text)} // TODO test only
 
         Data.load(data!!)
 
@@ -109,6 +112,7 @@ class MainActivity : AppCompatActivity() {
                         startActivityForResult(inte, challengeCode)
                     }
                 }
+        adView.loadAd(adRequest)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -208,5 +212,20 @@ class MainActivity : AppCompatActivity() {
             }
             return itemView
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        adView.resume()
+    }
+
+    override fun onPause() {
+        adView.pause()
+        super.onPause()
+    }
+
+    override fun onDestroy() {
+        adView.destroy()
+        super.onDestroy()
     }
 }
