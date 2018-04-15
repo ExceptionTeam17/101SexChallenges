@@ -9,7 +9,7 @@ class ShPrefs {
         private const val isFirst : String = "isFirstRunOn101SexChallenges"
         private const val age : String = "isAgeCheckedOn101SexChallenges"
         private const val progress : String = "progress101SexChallenges"
-
+        private const val interstitial : String = "interstitial101SexChallenges"
 
         fun isFirstRun (context: Context) : Boolean{
             val prefs : SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
@@ -44,6 +44,18 @@ class ShPrefs {
             val prefs : SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
             val editor = prefs.edit()
             editor.putInt(progress, (getProgress(context) + 1))
+            editor.apply()
+        }
+
+        fun getAdd (context: Context) : Int{
+            val prefs : SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+            return prefs.getInt(interstitial, 0)
+        }
+
+        fun addToAdd (context: Context, count: Int){
+            val prefs : SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+            val editor = prefs.edit()
+            editor.putInt(interstitial, count)
             editor.apply()
         }
     }
