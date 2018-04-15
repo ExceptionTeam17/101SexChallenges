@@ -1,6 +1,7 @@
 package com.exceptionteam17.a101sexchallenges
 
 import android.app.Activity
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -23,8 +24,12 @@ import android.transition.Transition
 import android.transition.Explode
 import android.transition.TransitionManager
 import android.transition.TransitionListenerAdapter
+import android.view.Window
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.InterstitialAd
+import com.google.android.gms.ads.AdListener
+import kotlinx.android.synthetic.main.dialog_close_layout.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -36,11 +41,15 @@ class MainActivity : AppCompatActivity() {
     private var data: ArrayList<Challenge>? = null
     private var adapter: MyGridAdapter? = null
     private var adRequest: AdRequest? = null
+    private var mInterstitialAd: InterstitialAd? = null
+    private var dialogClose: Dialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         MobileAds.initialize(this, "ca-app-pub-3940256099942544/1033173712") // TODO change test ID
         adRequest = AdRequest.Builder().build()
+        mInterstitialAd = InterstitialAd(this.applicationContext)
+        mInterstitialAd!!.adUnitId = "ca-app-pub-3940256099942544/1033173712" // TODO change test ID
         setContentView(R.layout.activity_main)
         supportActionBar!!.hide()
         db = DatabaseHelper.getInstance(this)
@@ -113,6 +122,11 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
         adView.loadAd(adRequest)
+
+        dialogClose = Dialog(this, R.style.Theme_Dialog)
+        dialogClose!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialogClose!!.setCancelable(false)
+        dialogClose!!.setContentView(R.layout.dialog_close_layout)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -135,6 +149,14 @@ class MainActivity : AppCompatActivity() {
 
         } else if (requestCode == ageCode && resultCode == Activity.RESULT_OK){
             ShPrefs.ageComfirmed(this, false)
+        }
+
+        val count: Int = (ShPrefs.getAdd(this) + 1)
+        if(count == 10){
+            showAdd()
+            ShPrefs.addToAdd(this, 0)
+        } else {
+            ShPrefs.addToAdd(this, count)
         }
     }
 
@@ -168,48 +190,42 @@ class MainActivity : AppCompatActivity() {
             when(item.state){
                 Challenge.NEW -> {
                     itemView.grid_img.setImageResource(R.drawable.new_state)
-                    itemView.grid_number.setShadowLayer(35F, 0F, 0F, Color.BLUE)
                 }
                 Challenge.DONE -> {
                     if(item.isLoved){
                         itemView.grid_img.setImageResource(R.drawable.love)
-                        itemView.grid_number.setShadowLayer(35F, 0F, 0F, Color.BLUE)
                     } else {
                         itemView.grid_img.setImageResource(R.drawable.done_state)
-                        itemView.grid_number.setShadowLayer(35F, 0F, 0F, Color.BLUE)
 
                     }
                 }
                 Challenge.OPPEND -> {
                     if(item.isLoved){
                         itemView.grid_img.setImageResource(R.drawable.open_love)
-                        itemView.grid_number.setShadowLayer(35F, 0F, 0F, Color.BLUE)
                     } else {
                         itemView.grid_img.setImageResource(R.drawable.open)
-                        itemView.grid_number.setShadowLayer(35F, 0F, 0F, Color.BLUE)
                     }
                 }
                 Challenge.NOTNOW -> {
                     if(item.isLoved){
-                        itemView.grid_img.setImageResource(R.drawable.notnowlove)
+                        itemView.grid_img.setImageResource(R.drawable.not_now_love)
 
                     } else {
-                        itemView.grid_img.setImageResource(R.drawable.notnow)
+                        itemView.grid_img.setImageResource(R.drawable.not_now)
                     }
 //                    itemView.grid_number.setTextColor(Color.BLACK)
-                    itemView.grid_number.setShadowLayer(35F, 0F, 0F, Color.RED) //todo ADD TO ALL
                 }
                 Challenge.NEVER -> {
                     if(item.isLoved){
                         itemView.grid_img.setImageResource(R.drawable.never_love_state)
-                        itemView.grid_number.setShadowLayer(35F, 0F, 0F, Color.BLUE)
                     } else {
                         itemView.grid_img.setImageResource(R.drawable.never)
-                        itemView.grid_number.setShadowLayer(35F, 0F, 0F, Color.BLUE)
 
                     }
                 }
             }
+            itemView.grid_number.setShadowLayer(35F, 0F, 0F, Color.BLUE)
+
             return itemView
         }
     }
@@ -227,5 +243,31 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         adView.destroy()
         super.onDestroy()
+    }
+
+    private fun showAdd(){
+        val adRequest = AdRequest.Builder().build()
+        mInterstitialAd!!.loadAd(adRequest)
+        mInterstitialAd!!.adListener = object : AdListener() {
+            override fun onAdLoaded() {
+                if (mInterstitialAd!!.isLoaded()) {
+                    mInterstitialAd!!.show()
+                }
+            }
+        }
+    }
+
+    override fun onBackPressed() {
+        dialogClose!!.di_close_no.setOnClickListener {
+            dialogClose!!.dismiss()
+        }
+
+        dialogClose!!.di_close_yes.setOnClickListener {
+        setResult(Activity.RESULT_CANCELED)
+            dialogClose!!.dismiss()
+        finish()
+        }
+
+        dialogClose!!.show()
     }
 }

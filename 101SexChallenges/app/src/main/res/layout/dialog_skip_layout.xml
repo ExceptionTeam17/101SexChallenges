@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="200dp"
     android:layout_height="wrap_content"
     android:gravity="center"
     android:layout_gravity="center"
@@ -18,7 +18,9 @@
         android:textColor="@color/white"
         android:textColorHint="#77ffffff"
         android:textColorHighlight="@color/white"
-        android:layout_margin="8dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
         android:fontFamily="@font/kaushan_script_regular"
         android:hint="@string/comment_dia"/>
 
@@ -27,19 +29,52 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <Button
+        <LinearLayout
             android:id="@+id/di_skip_never"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+            android:layout_margin="12dp"
+            android:orientation="vertical">
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/notnow_a"
             android:text="never"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:layout_gravity="center"
+                android:fontFamily="@font/kaushan_script_regular"
+                android:layout_marginTop="-4dp"
+                android:gravity="center"
+                android:text="Never!"/>
 
-        <Button
+        </LinearLayout>
+        <LinearLayout
             android:id="@+id/di_skip_not_now"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:text="not now"/>
+            android:layout_margin="12dp"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/sex_icon"
+                android:layout_gravity="center"
+                android:gravity="center"
+
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:layout_gravity="center"
+                android:fontFamily="@font/kaushan_script_regular"
+                android:layout_marginTop="-4dp"
+                android:gravity="center"
+                android:text="Not now"/>
+    </LinearLayout>
 
     </LinearLayout>
 </LinearLayout>

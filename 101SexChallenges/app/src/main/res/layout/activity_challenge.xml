@@ -131,14 +131,18 @@
             android:src="@drawable/back"
             android:layout_gravity="center_horizontal"/>
 
-        <Button
+        <TextView
             android:id="@+id/chal_btn_skip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:text="skip"
-            android:layout_gravity="center_horizontal"/>
+            android:gravity="center"
+            android:fontFamily="@font/kaushan_script_regular"
+            android:textColor="#FCC309"
+            android:textSize="34sp"
+            android:text="Skip "
+            android:layout_gravity="center"/>
 
 
         <ImageView

@@ -9,11 +9,14 @@
     android:orientation="vertical">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:gravity="center"
+        android:layout_marginTop="16dp"
         android:layout_gravity="center"
+        android:fontFamily="@font/kaushan_script_regular"
         android:textColor="@color/white"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
         android:text="Are you sure?"/>
 
     <LinearLayout
@@ -21,19 +24,19 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <Button
+        <ImageView
             android:id="@+id/di_close_no"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:text="no"/>
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="12dp"
+            android:src="@drawable/back" />
 
-        <Button
+        <ImageView
             android:id="@+id/di_close_yes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:text="yes"/>
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="12dp"
+            android:src="@drawable/ok"/>
 
     </LinearLayout>
 </LinearLayout>
