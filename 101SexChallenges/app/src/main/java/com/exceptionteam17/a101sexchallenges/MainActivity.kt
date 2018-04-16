@@ -6,10 +6,8 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Rect
-import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,7 +21,6 @@ import kotlinx.android.synthetic.main.grid_elem.view.*
 import android.transition.Transition
 import android.transition.Explode
 import android.transition.TransitionManager
-import android.transition.TransitionListenerAdapter
 import android.view.Window
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
@@ -46,10 +43,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        MobileAds.initialize(this, "ca-app-pub-3940256099942544/1033173712") // TODO change test ID
+        MobileAds.initialize(this, "ca-app-pub-3532736192097860~7751115982")
         adRequest = AdRequest.Builder().build()
         mInterstitialAd = InterstitialAd(this.applicationContext)
-        mInterstitialAd!!.adUnitId = "ca-app-pub-3940256099942544/1033173712" // TODO change test ID
+        mInterstitialAd!!.adUnitId = "ca-app-pub-3532736192097860/1434131408"
         setContentView(R.layout.activity_main)
         supportActionBar!!.hide()
         db = DatabaseHelper.getInstance(this)
@@ -58,7 +55,6 @@ class MainActivity : AppCompatActivity() {
             startActivityForResult(Intent(this, AgeCheck::class.java), ageCode)
         }
         if(ShPrefs.isFirstRun(this)) { // first run
-//        if(true){
             db!!.addOnFirstRun()
             ShPrefs.setIsFirstRun(this, false)
         }
@@ -66,7 +62,6 @@ class MainActivity : AppCompatActivity() {
         main_text_progress.text = getString(R.string.progress_main, ShPrefs.getProgress(this))
         main_text_progress.setShadowLayer(25F, 0F, 0F, Color.parseColor("#FFF47070"))
         data = db!!.getData()
-//        data!!.forEach { Log.e("Bla", it.text)} // TODO test only
 
         Data.load(data!!)
 
