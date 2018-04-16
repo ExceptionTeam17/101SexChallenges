@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">101SexChallenges</string>
+    <string name="app_name">101 Sex Challenges</string>
     <string name="first_time_open">First time open: %1$s</string>
     <string name="first_time_done">First time done: %1$s</string>
     <string name="progress_main">Progress: %1$d / 101</string>
