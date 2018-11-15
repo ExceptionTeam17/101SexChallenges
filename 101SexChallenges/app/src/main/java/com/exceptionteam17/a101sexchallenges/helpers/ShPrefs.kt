@@ -10,6 +10,8 @@ class ShPrefs {
         private const val age : String = "isAgeCheckedOn101SexChallenges"
         private const val progress : String = "progress101SexChallenges"
         private const val interstitial : String = "interstitial101SexChallenges"
+        private const val finish : String = "interstitial101SexChallengesFinish"
+
 
         fun isFirstRun (context: Context) : Boolean{
             val prefs : SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
@@ -26,6 +28,18 @@ class ShPrefs {
         fun isAgeChecked (context: Context) : Boolean{
             val prefs : SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
             return prefs.getBoolean(age, true)
+        }
+
+        fun isFinishing (context: Context) : Boolean{
+            val prefs : SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+            return prefs.getBoolean(finish, false)
+        }
+
+        fun setFinish (context: Context, isIt: Boolean){
+            val prefs : SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+            val editor = prefs.edit()
+            editor.putBoolean(finish, isIt)
+            editor.apply()
         }
 
         fun ageComfirmed (context: Context, isIt : Boolean){

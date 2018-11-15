@@ -12,13 +12,18 @@ import java.util.*
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.app.Dialog
+import android.os.Handler
 import android.view.Window
+import android.view.WindowManager
+import com.chartboost.sdk.CBLocation
+import com.chartboost.sdk.Chartboost
 import com.exceptionteam17.a101sexchallenges.helpers.DatabaseHelper
 import com.google.android.gms.ads.AdRequest
 import kotlinx.android.synthetic.main.dialog_close_layout.*
 import kotlinx.android.synthetic.main.dialog_done_layout.*
 import kotlinx.android.synthetic.main.dialog_skip_layout.*
 import xyz.hanks.library.bang.SmallBangView
+import java.lang.Exception
 
 
 class ChallengeActivity : AppCompatActivity() {
@@ -28,18 +33,26 @@ class ChallengeActivity : AppCompatActivity() {
     private var dialogSpip: Dialog? = null
     private var dialogClose: Dialog? = null
     private var dialogDone: Dialog? = null
-    private var adRequest: AdRequest? = null
+//    private var adRequest: AdRequest? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        adRequest = AdRequest.Builder().build()
-        setContentView(R.layout.activity_challenge)
-        supportActionBar!!.hide()
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
+//        adRequest = AdRequest.Builder().build()
+        Chartboost.onCreate(this)
+        setContentView(R.layout.activity_challenge)
+        try {
+            supportActionBar!!.hide()
+        } catch (ignored: Exception){}
+
+        if(intent == null && id == null){
+            exit()
+        }
         id = intent.getIntExtra("id", 0)
 
-        chal_text.text = Data.list!![id!!]!!.text
+        chal_text.text = Data.list?.get(id!!)?.text?: " "
 
         db = DatabaseHelper.getInstance(this)
 
@@ -217,7 +230,18 @@ class ChallengeActivity : AppCompatActivity() {
 
             dialogDone!!.show()
         }
-        adViewC.loadAd(adRequest)
+//        adViewC.loadAd(adRequest)
+        Chartboost.setAutoCacheAds(true)
+        Chartboost.cacheInterstitial(CBLocation.LOCATION_DEFAULT)
+        Handler().postDelayed({
+            try {
+                if (Chartboost.hasInterstitial(CBLocation.LOCATION_DEFAULT)) {
+                    Chartboost.showInterstitial(CBLocation.LOCATION_DEFAULT)
+                } else {
+                    Chartboost.cacheInterstitial(CBLocation.LOCATION_DEFAULT)
+                }
+            }catch (ignored: Throwable){}
+        }, 30000)
     }
 
     override  fun onBackPressed() {
@@ -239,18 +263,29 @@ class ChallengeActivity : AppCompatActivity() {
 
     }
 
+    public override fun onStart() {
+        super.onStart()
+        Chartboost.onStart(this)
+    }
+
     override fun onResume() {
         super.onResume()
-        adViewC.resume()
+        Chartboost.onResume(this)
     }
 
     override fun onPause() {
-        adViewC.pause()
         super.onPause()
+        Chartboost.onPause(this)
+
+    }
+
+    public override fun onStop() {
+        super.onStop()
+        Chartboost.onStop(this)
     }
 
     override fun onDestroy() {
-        adViewC.destroy()
+        Chartboost.onDestroy(this)
         super.onDestroy()
     }
 }

@@ -8,9 +8,6 @@ import android.graphics.Color
 import android.graphics.Rect
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.*
 import com.exceptionteam17.a101sexchallenges.helpers.Data
 import com.exceptionteam17.a101sexchallenges.helpers.DatabaseHelper
@@ -21,12 +18,20 @@ import kotlinx.android.synthetic.main.grid_elem.view.*
 import android.transition.Transition
 import android.transition.Explode
 import android.transition.TransitionManager
-import android.view.Window
-import com.google.android.gms.ads.AdRequest
+import android.view.*
 import com.google.android.gms.ads.MobileAds
-import com.google.android.gms.ads.InterstitialAd
-import com.google.android.gms.ads.AdListener
 import kotlinx.android.synthetic.main.dialog_close_layout.*
+
+import com.chartboost.sdk.Chartboost
+import com.chartboost.sdk.CBLocation
+import com.chartboost.sdk.ChartboostDelegate
+import com.chartboost.sdk.Model.CBError
+import java.lang.Exception
+
+//App ID
+//5bec973d022cd64a024a163c
+//Signature
+//4cbf9592c1c23639c83afae74dbe464727dbd0b7
 
 
 class MainActivity : AppCompatActivity() {
@@ -37,18 +42,26 @@ class MainActivity : AppCompatActivity() {
     private var db: DatabaseHelper? = null
     private var data: ArrayList<Challenge>? = null
     private var adapter: MyGridAdapter? = null
-    private var adRequest: AdRequest? = null
-    private var mInterstitialAd: InterstitialAd? = null
+    //private var adRequest: AdRequest? = null
+    //private var mInterstitialAd: InterstitialAd? = null
     private var dialogClose: Dialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        MobileAds.initialize(this, "ca-app-pub-3532736192097860~7751115982")
-        adRequest = AdRequest.Builder().build()
-        mInterstitialAd = InterstitialAd(this.applicationContext)
-        mInterstitialAd!!.adUnitId = "ca-app-pub-3532736192097860/1434131408"
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+
+        Chartboost.startWithAppId(this, "5bec973d022cd64a024a163c", "4cbf9592c1c23639c83afae74dbe464727dbd0b7")
+        Chartboost.onCreate(this)
+        Chartboost.setAutoCacheAds(true)
+
+//        MobileAds.initialize(this, "ca-app-pub-3532736192097860~7751115982")
+        //adRequest = AdRequest.Builder().build()
+        //mInterstitialAd = InterstitialAd(this.applicationContext)
+        //mInterstitialAd!!.adUnitId = "ca-app-pub-3532736192097860/1434131408"
         setContentView(R.layout.activity_main)
-        supportActionBar!!.hide()
+        try {
+            supportActionBar!!.hide()
+        } catch (ignored: Exception){}
         db = DatabaseHelper.getInstance(this)
 
         if(ShPrefs.isAgeChecked(this)) { // first run
@@ -116,7 +129,9 @@ class MainActivity : AppCompatActivity() {
                         startActivityForResult(inte, challengeCode)
                     }
                 }
-        adView.loadAd(adRequest)
+        //adView.loadAd(adRequest)
+        Chartboost.cacheInterstitial(CBLocation.LOCATION_HOME_SCREEN)
+        Chartboost.setDelegate(cartBoostDelegate)
 
         dialogClose = Dialog(this, R.style.Theme_Dialog)
         dialogClose!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -146,13 +161,6 @@ class MainActivity : AppCompatActivity() {
             ShPrefs.ageComfirmed(this, false)
         }
 
-        val count: Int = (ShPrefs.getAdd(this) + 1)
-        if(count == 10){
-            showAdd()
-            ShPrefs.addToAdd(this, 0)
-        } else {
-            ShPrefs.addToAdd(this, count)
-        }
     }
 
 
@@ -225,42 +233,114 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    public override fun onStart() {
+        super.onStart()
+        Chartboost.onStart(this)
+    }
+
     override fun onResume() {
         super.onResume()
-        adView.resume()
+        //adView.resume()
+        Chartboost.onResume(this)
+        val count: Int = (ShPrefs.getAdd(this) + 1)
+
+        if(count >= 5 ){
+            try {
+                if (Chartboost.hasInterstitial(CBLocation.LOCATION_HOME_SCREEN)) {
+                    Chartboost.showInterstitial(CBLocation.LOCATION_HOME_SCREEN)
+                } else {
+                    Chartboost.cacheInterstitial(CBLocation.LOCATION_HOME_SCREEN)
+                }
+            }catch (ignored: Throwable){}
+            ShPrefs.addToAdd(this, 0)
+        } else {
+            ShPrefs.addToAdd(this, count)
+        }
     }
 
     override fun onPause() {
-        adView.pause()
+        //adView.pause()
         super.onPause()
+        Chartboost.onPause(this)
+
+    }
+
+    public override fun onStop() {
+        super.onStop()
+        Chartboost.onStop(this)
     }
 
     override fun onDestroy() {
-        adView.destroy()
+        //adView.destroy()
+        Chartboost.onDestroy(this)
         super.onDestroy()
     }
 
-    private fun showAdd(){
-        val adRequest = AdRequest.Builder().build()
-        mInterstitialAd!!.loadAd(adRequest)
-        mInterstitialAd!!.adListener = object : AdListener() {
-            override fun onAdLoaded() {
-                if (mInterstitialAd!!.isLoaded()) {
-                    mInterstitialAd!!.show()
-                }
+//    private fun showAdd(){
+//        val adRequest = AdRequest.Builder().build()
+//        mInterstitialAd!!.loadAd(adRequest)
+//        mInterstitialAd!!.adListener = object : AdListener() {
+//            override fun onAdLoaded() {
+//                if (mInterstitialAd!!.isLoaded()) {
+//                    mInterstitialAd!!.show()
+//                }
+//            }
+//        }
+//    }
+
+    private var cartBoostDelegate: ChartboostDelegate = object: ChartboostDelegate(){
+        override fun didCloseInterstitial(location: String?) {
+            super.didCloseInterstitial(location)
+            if(ShPrefs.isFinishing(this@MainActivity)){
+                ShPrefs.setFinish(this@MainActivity, false)
+                this@MainActivity.finish()
+            }
+        }
+
+        override fun didDismissInterstitial(location: String?) {
+            super.didDismissInterstitial(location)
+            if(ShPrefs.isFinishing(this@MainActivity)){
+                ShPrefs.setFinish(this@MainActivity, false)
+                this@MainActivity.finish()
+            }
+        }
+
+        override fun didFailToLoadInterstitial(location: String?, error: CBError.CBImpressionError?) {
+            super.didFailToLoadInterstitial(location, error)
+            if(ShPrefs.isFinishing(this@MainActivity)){
+                ShPrefs.setFinish(this@MainActivity, false)
+                this@MainActivity.finish()
+            }
+        }
+
+        override fun didClickInterstitial(location: String?) {
+            super.didClickInterstitial(location)
+            if(ShPrefs.isFinishing(this@MainActivity)){
+                ShPrefs.setFinish(this@MainActivity, false)
+                this@MainActivity.finish()
             }
         }
     }
 
     override fun onBackPressed() {
+        if (Chartboost.onBackPressed())
+            return
         dialogClose!!.di_close_no.setOnClickListener {
             dialogClose!!.dismiss()
         }
 
         dialogClose!!.di_close_yes.setOnClickListener {
-        setResult(Activity.RESULT_CANCELED)
+            setResult(Activity.RESULT_CANCELED)
             dialogClose!!.dismiss()
-        finish()
+            ShPrefs.setFinish(it.context, true)
+            try {
+                if (Chartboost.hasInterstitial(CBLocation.LOCATION_HOME_SCREEN)) {
+                    Chartboost.showInterstitial(CBLocation.LOCATION_HOME_SCREEN)
+                } else {
+                    Chartboost.cacheInterstitial(CBLocation.LOCATION_HOME_SCREEN)
+                }
+            }catch (ignored: Throwable){}
+            //finish()
         }
 
         dialogClose!!.show()

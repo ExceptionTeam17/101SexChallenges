@@ -22,12 +22,12 @@ class AgeCheck : AppCompatActivity() {
         dialog!!.setCancelable(false)
         dialog!!.setContentView(R.layout.dialog_are_sure)
 
-        btn_age_no.setOnClickListener({
+        btn_age_no.setOnClickListener {
             setResult(Activity.RESULT_CANCELED)
             finish()
-        })
+        }
 
-        btn_age_yes.setOnClickListener ({
+        btn_age_yes.setOnClickListener {
             dialog!!.btn_age_dialog_no.setOnClickListener {
                 dialog!!.dismiss()
             }
@@ -38,6 +38,6 @@ class AgeCheck : AppCompatActivity() {
                 finish()
             }
             dialog!!.show()
-        })
+        }
     }
 }
