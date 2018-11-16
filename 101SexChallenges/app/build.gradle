@@ -10,8 +10,8 @@ android {
         applicationId "com.exceptionteam17.a101sexchallenges"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 201811151
-        versionName "1.0.1"
+        versionCode 201811161
+        versionName "1.0.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

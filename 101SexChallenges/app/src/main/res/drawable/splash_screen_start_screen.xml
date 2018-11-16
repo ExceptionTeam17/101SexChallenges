@@ -2,7 +2,7 @@
     <item android:drawable="@android:color/black"/>
     <item>
         <bitmap
-            android:src="@mipmap/ic_app"
+            android:src="@drawable/splash_icon"
             android:gravity="center"/>
     </item>
 </layer-list>
