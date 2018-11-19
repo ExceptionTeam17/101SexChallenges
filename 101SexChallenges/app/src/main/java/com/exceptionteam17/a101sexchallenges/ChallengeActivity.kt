@@ -245,6 +245,8 @@ class ChallengeActivity : AppCompatActivity() {
     }
 
     override  fun onBackPressed() {
+        if (Chartboost.onBackPressed())
+            return
         exit()
     }
 
