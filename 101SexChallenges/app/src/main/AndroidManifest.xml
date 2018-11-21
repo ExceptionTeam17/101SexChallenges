@@ -6,6 +6,9 @@
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <permission android:name="com.exceptionteam17.PERMISSION"
+        android:protectionLevel="normal"/>
+    <uses-permission android:name="com.exceptionteam17.PERMISSION"/>
 
 
     <application
@@ -38,6 +41,14 @@
             android:hardwareAccelerated="true"
             android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"
             android:configChanges="keyboardHidden|orientation|screenSize" />
+
+        <provider
+            android:name=".helpers.DatabaseProvider"
+            android:authorities="com.exceptionteam17.a101sexchallenges"
+            android:multiprocess="true"
+            android:readPermission="com.exceptionteam17.PERMISSION"
+            android:exported="true" >
+        </provider>
     </application>
 
 </manifest>

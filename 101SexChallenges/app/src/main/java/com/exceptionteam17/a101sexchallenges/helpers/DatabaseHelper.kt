@@ -2,9 +2,9 @@ package com.exceptionteam17.a101sexchallenges.helpers
 
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.util.Log
 import com.exceptionteam17.a101sexchallenges.model.Challenge
 
 class DatabaseHelper private constructor(context: Context):
@@ -187,6 +187,12 @@ class DatabaseHelper private constructor(context: Context):
         } while(c.moveToNext())
         c.close()
         return data
+    }
+
+    fun exportData(): Cursor{
+        val db = this.readableDatabase
+        val myRawQuery = "SELECT * FROM $TABLE_USERS_SCORES"
+        return db.rawQuery(myRawQuery, null)
     }
 
     fun updateState(id: Int, state: Int){
