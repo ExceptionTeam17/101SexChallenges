@@ -49,6 +49,11 @@
             android:readPermission="com.exceptionteam17.PERMISSION"
             android:exported="true" >
         </provider>
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="fbc670f68489a62a63f8b2cc503773ad07a4e8b5"
+            />
     </application>
 
 </manifest>

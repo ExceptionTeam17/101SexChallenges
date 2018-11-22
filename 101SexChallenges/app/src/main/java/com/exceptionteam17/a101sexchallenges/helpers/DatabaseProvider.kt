@@ -60,7 +60,6 @@ class DatabaseProvider: ContentProvider() {
         val matcher = UriMatcher(UriMatcher.NO_MATCH)
         val authority = CONTENT_AUTHORITY
         matcher.addURI(authority, "challengesSex101.db", 889)
-        //matcher.addURI(authority, "challengesSex101.db" + "/#", CODE_TODO_WITH_ID)
 
         return matcher
     }

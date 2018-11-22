@@ -19,7 +19,6 @@ import android.transition.Transition
 import android.transition.Explode
 import android.transition.TransitionManager
 import android.view.*
-import com.google.android.gms.ads.MobileAds
 import kotlinx.android.synthetic.main.dialog_close_layout.*
 
 import com.chartboost.sdk.Chartboost
@@ -27,6 +26,8 @@ import com.chartboost.sdk.CBLocation
 import com.chartboost.sdk.ChartboostDelegate
 import com.chartboost.sdk.Model.CBError
 import java.lang.Exception
+import com.crashlytics.android.Crashlytics
+import io.fabric.sdk.android.Fabric
 
 //App ID
 //5bec973d022cd64a024a163c
@@ -48,6 +49,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Fabric.with(this, Crashlytics())
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
         Chartboost.startWithAppId(this, "5bec973d022cd64a024a163c", "4cbf9592c1c23639c83afae74dbe464727dbd0b7")
@@ -245,6 +247,7 @@ class MainActivity : AppCompatActivity() {
         val count: Int = (ShPrefs.getAdd(this) + 1)
 
         if(count >= 5 ){
+            ShPrefs.addToAdd(this, 0)
             try {
                 if (Chartboost.hasInterstitial(CBLocation.LOCATION_HOME_SCREEN)) {
                     Chartboost.showInterstitial(CBLocation.LOCATION_HOME_SCREEN)
@@ -252,7 +255,6 @@ class MainActivity : AppCompatActivity() {
                     Chartboost.cacheInterstitial(CBLocation.LOCATION_HOME_SCREEN)
                 }
             }catch (ignored: Throwable){}
-            ShPrefs.addToAdd(this, 0)
         } else {
             ShPrefs.addToAdd(this, count)
         }

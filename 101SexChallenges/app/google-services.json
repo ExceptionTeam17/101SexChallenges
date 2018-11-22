@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "302571537361",
+    "firebase_url": "https://sex-challenges.firebaseio.com",
+    "project_id": "sex-challenges",
+    "storage_bucket": "sex-challenges.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:302571537361:android:61cdb10ae2dde84e",
+        "android_client_info": {
+          "package_name": "com.exceptionteam17.a101sexchallenges"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "302571537361-nuobk76k9ro9un1416ne4ddln75ddmi6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.exceptionteam17.a101sexchallenges",
+            "certificate_hash": "92d64d63182819e2a91261fee5489a4d92763e09"
+          }
+        },
+        {
+          "client_id": "302571537361-82d06rgo18af03o6k54k9gqltubfc2p9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC0tc9QG8WBV4r2EOhrUNOI6BbJlSdWUrA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "302571537361-82d06rgo18af03o6k54k9gqltubfc2p9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

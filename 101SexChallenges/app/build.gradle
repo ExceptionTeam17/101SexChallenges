@@ -10,8 +10,8 @@ android {
         applicationId "com.exceptionteam17.a101sexchallenges"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 201811161
-        versionName "1.0.2"
+        versionCode 201811221
+        versionName "1.0.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -30,11 +30,17 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    implementation 'com.google.android.gms:play-services-ads:15.0.0'
-    implementation 'com.google.android.gms:play-services-base:15.0.0'
-    implementation 'com.google.android.gms:play-services-ads-identifier:15.0.0'
-
+    implementation 'com.google.android.gms:play-services-ads:16.0.0'
+    implementation 'com.google.android.gms:play-services-base:16.0.0'
+    implementation 'com.google.android.gms:play-services-ads-identifier:16.0.0'
+    implementation 'com.google.firebase:firebase-core:16.0.4'
+    implementation 'com.google.firebase:firebase-analytics:16.0.4'
     implementation files('../libs/chartboost.jar')
-
+    implementation('com.crashlytics.sdk.android:crashlytics:2.9.6@aar') {
+        transitive = true
+    }
     implementation 'pub.hanks:smallbang:1.2.2'
 }
+
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'io.fabric'
