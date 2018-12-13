@@ -308,11 +308,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun didFailToLoadInterstitial(location: String?, error: CBError.CBImpressionError?) {
-            super.didFailToLoadInterstitial(location, error)
             if(ShPrefs.isFinishing(this@MainActivity)){
                 ShPrefs.setFinish(this@MainActivity, false)
                 this@MainActivity.finish()
             }
+            super.didFailToLoadInterstitial(location, error)
         }
 
         override fun didClickInterstitial(location: String?) {
@@ -340,6 +340,7 @@ class MainActivity : AppCompatActivity() {
                     Chartboost.showInterstitial(CBLocation.LOCATION_HOME_SCREEN)
                 } else {
                     Chartboost.cacheInterstitial(CBLocation.LOCATION_HOME_SCREEN)
+                    finish()
                 }
             }catch (ignored: Throwable){}
             //finish()

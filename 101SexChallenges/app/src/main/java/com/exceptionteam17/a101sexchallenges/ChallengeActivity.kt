@@ -241,7 +241,7 @@ class ChallengeActivity : AppCompatActivity() {
                     Chartboost.cacheInterstitial(CBLocation.LOCATION_DEFAULT)
                 }
             }catch (ignored: Throwable){}
-        }, 30000)
+        }, 10000)
     }
 
     override  fun onBackPressed() {
